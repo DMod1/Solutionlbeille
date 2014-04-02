@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+<div>
+    <section class="getLicencie">
+        <h1>Tous les licenciés</h1>
+        <select name="lstLicencie" id="lstLicencie" size="4"></select>
+        <a id="linkCreate">Nouveau licencié</a>
+        <a id="linkDelete">Supprimer licencié</a>
+    </section>
+    <section class="featured">
+        <h2 class="getLicencie">Détails licencié</h2>
+        <h2 hidden class="createLicencie">Création d'un licencié</h2>
+        <label class="getLicencie" for="txtNumeroLicence">Numéro licence</label><br />
+        <input class="getLicencie" type="text" id="txtNumeroLicence" />
+        <br />
+        <label for="txtNom">Nom</label><br />
+        <input type="text" id="txtNom" />
+        <br />
+        <label for="txtPrenom">Prénom</label><br />
+        <input type="text" id="txtPrenom" />
+        <br />
+        <label for="txtNombreButs">Nombre de buts</label><br />
+        <input type="text" id="txtNombreButs" /><br />
+        <input type="button" hidden value="Créer" id="cmdCreate" class="createLicencie" />
+    </section>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $('#lstLicencie').change(RechercherLicencie);
+        ShowLicencies();
+
+
+
+        $('#linkCreate').on('click', function () {
+            $('.getLicencie').hide();
+            $('.createLicencie').show();
+            $('#txtNumeroLicence').val("");
+            $('#txtNom').val("");
+            $('#txtPrenom').val("");
+            $('#txtNombreButs').val("");
+        });
+
+        $('#cmdCreate').on('click', function () {
+            var unLicencie = AjouterLicencie();
+            $.ajax({
+                url: "../api/licencieapi/",
+                type: "POST",
+                data: unLicencie,
+                success: function (unLicencie) {
+                    $('#txtNumeroLicence').val(unLicencie.NumeroLicence);
+                    $('#txtNom').val(unLicencie.Nom);
+                    $('#txtPrenom').val(unLicencie.Prenom);
+                    $('#txtNombreButs').val(unLicencie.NombreButs);
+                }
+            }).complete(function () {
+                ShowLicencies();
+            });
+
+            $('.getLicencie').show();
+            $('.createLicencie').hide();
+            $('#txtNumeroLicence').val("");
+            $('#txtNom').val("");
+            $('#txtPrenom').val("");
+            $('#txtNombreButs').val("");            
+        });
+
+        $('#linkDelete').on('click', function () {
+            SupprimerLicencie();
+        });
+
+        function ShowLicencies() {
+            $('#lstLicencie').empty();
+            $.getJSON("../api/licencieapi/",
+                function (data) {
+                    $.each(data, function (index, unLicencier) {
+                        var o = new Option(unLicencier.Nom, unLicencier.NumeroLicence);
+                        $('#lstLicencie').append(o);
+                    });
+                });
+        }
+
+        function RechercherLicencie() {
+            var numeroLicencie = $(this).val();
+
+            $.getJSON("../api/licencieapi/" + numeroLicencie,
+            function (unLicencie) {
+                $('#txtNumeroLicence').val(unLicencie.NumeroLicence);
+                $('#txtNom').val(unLicencie.Nom);
+                $('#txtPrenom').val(unLicencie.Prenom);
+                $('#txtNombreButs').val(unLicencie.NombreButs);
+            });
+        }
+
+        function AjouterLicencie() {
+            var unLicencier =
+                {
+                    NumeroLicencie: 0,
+                    Nom: $('#txtNom').val(),
+                    Prenom: $('#txtPrenom').val(),
+                    NombreButs: $('#txtNombreButs').val()
+                };
+            return unLicencier;
+        }
+
+        function SupprimerLicencie()
+        {
+            var txt = $('#txtNumeroLicence').val();
+
+            $.ajax({
+                url: '../api/licencieapi/'+txt,
+                type: 'delete',
+                success:function(res)
+                {
+                    $('option:[value=' + txt + ']').remove();
+                    $('#txtNumeroLicence').val("");
+                    $('#txtNom').val("");
+                    $('#txtPrenom').val("");
+                    $('#txtNombreButs').val("");
+                }
+            })
+        }
+    </script>
+}
+

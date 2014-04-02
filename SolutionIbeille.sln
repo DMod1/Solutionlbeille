@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ibeille.Contract", "lbeille.Contract\Ibeille.Contract.csproj", "{F0EB23D5-7EB3-4FF1-B1B4-06799E578FFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ibeille.Service", "lbeille.Service\Ibeille.Service.csproj", "{360FBB9D-A252-4DB3-A381-9CD397986E41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ibeille.DAL", "lbeille.DAL\Ibeille.DAL.csproj", "{C7562498-7EFE-4B4D-B4CB-C72C38A07093}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbeilleMVC", "IbeilleMVC\IbeilleMVC.csproj", "{1DA54DD6-8956-4BED-821B-ED73E27F8FD3}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://10.10.0.201:8080/tfs/diiage2016
+		SccProjectUniqueName0 = lbeille.Service\\Ibeille.Service.csproj
+		SccProjectName0 = lbeille.Service
+		SccLocalPath0 = lbeille.Service
+		SccProjectUniqueName1 = lbeille.Contract\\Ibeille.Contract.csproj
+		SccProjectName1 = lbeille.Contract
+		SccLocalPath1 = lbeille.Contract
+		SccProjectUniqueName2 = lbeille.DAL\\Ibeille.DAL.csproj
+		SccProjectName2 = lbeille.DAL
+		SccLocalPath2 = lbeille.DAL
+		SccProjectUniqueName3 = IbeilleMVC\\IbeilleMVC.csproj
+		SccProjectName3 = IbeilleMVC
+		SccLocalPath3 = IbeilleMVC
+		SccLocalPath4 = .
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F0EB23D5-7EB3-4FF1-B1B4-06799E578FFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0EB23D5-7EB3-4FF1-B1B4-06799E578FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0EB23D5-7EB3-4FF1-B1B4-06799E578FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0EB23D5-7EB3-4FF1-B1B4-06799E578FFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{360FBB9D-A252-4DB3-A381-9CD397986E41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{360FBB9D-A252-4DB3-A381-9CD397986E41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{360FBB9D-A252-4DB3-A381-9CD397986E41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{360FBB9D-A252-4DB3-A381-9CD397986E41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7562498-7EFE-4B4D-B4CB-C72C38A07093}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7562498-7EFE-4B4D-B4CB-C72C38A07093}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7562498-7EFE-4B4D-B4CB-C72C38A07093}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7562498-7EFE-4B4D-B4CB-C72C38A07093}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DA54DD6-8956-4BED-821B-ED73E27F8FD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DA54DD6-8956-4BED-821B-ED73E27F8FD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DA54DD6-8956-4BED-821B-ED73E27F8FD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DA54DD6-8956-4BED-821B-ED73E27F8FD3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

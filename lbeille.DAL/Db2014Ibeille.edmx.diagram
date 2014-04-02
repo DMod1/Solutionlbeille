@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9c2248ed25a145f6a8cdb53a172e7c6e" Name="Diagram1">
+        <EntityTypeShape EntityType="Db2014IbeilleModel.Article" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Db2014IbeilleModel.Categorie" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Db2014IbeilleModel.Enchere" Width="1.5" PointX="7.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Db2014IbeilleModel.Encherisseur" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Db2014IbeilleModel.Image" Width="1.5" PointX="8.125" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Db2014IbeilleModel.Inscrit" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Db2014IbeilleModel.Message" Width="1.5" PointX="10.5" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="Db2014IbeilleModel.Vendeur" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <AssociationConnector Association="Db2014IbeilleModel.FK_Article_Categorie" ManuallyRouted="false" />
+        <AssociationConnector Association="Db2014IbeilleModel.FK_Article_Vendeur" ManuallyRouted="false" />
+        <AssociationConnector Association="Db2014IbeilleModel.FK_Enchere_Article" ManuallyRouted="false" />
+        <AssociationConnector Association="Db2014IbeilleModel.FK_Image_Article" ManuallyRouted="false" />
+        <AssociationConnector Association="Db2014IbeilleModel.FK_Message_Article" ManuallyRouted="false" />
+        <AssociationConnector Association="Db2014IbeilleModel.FK_Categorie_Categorie" ManuallyRouted="false" />
+        <AssociationConnector Association="Db2014IbeilleModel.FK_Enchere_Encherisseur" ManuallyRouted="false" />
+        <AssociationConnector Association="Db2014IbeilleModel.FK_Message_Encherisseur" ManuallyRouted="false" />
+        <AssociationConnector Association="Db2014IbeilleModel.FK_Message_Message" ManuallyRouted="false" />
+        <AssociationConnector Association="Db2014IbeilleModel.FK_Message_Vendeur" ManuallyRouted="false" />
+        <AssociationConnector Association="Db2014IbeilleModel.Suivre" ManuallyRouted="false" />
+        <InheritanceConnector EntityType="Db2014IbeilleModel.Encherisseur" />
+        <InheritanceConnector EntityType="Db2014IbeilleModel.Vendeur" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

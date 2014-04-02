@@ -1,0 +1,714 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Db2014IbeilleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="IdArticle" />
+          </Key>
+          <Property Name="IdArticle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="DateMiseEnVente" Type="datetime" />
+          <Property Name="DateVente" Type="datetime" />
+          <Property Name="PrixMiseEnVente" Type="float" />
+          <Property Name="IdCategorie" Type="int" Nullable="false" />
+          <Property Name="PrixReserve" Type="float" />
+          <Property Name="PseudoVendeur" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="IdCategorie" />
+          </Key>
+          <Property Name="IdCategorie" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Libelle" Type="nvarchar" MaxLength="50" />
+          <Property Name="IdCategorieAppartenance" Type="int" />
+        </EntityType>
+        <EntityType Name="Enchere">
+          <Key>
+            <PropertyRef Name="idEnchere" />
+          </Key>
+          <Property Name="idEnchere" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Montant" Type="float" Nullable="false" />
+          <Property Name="DateEnchere" Type="datetime" />
+          <Property Name="IdArticle" Type="int" Nullable="false" />
+          <Property Name="PseudoEncherisseur" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Encherisseur">
+          <Key>
+            <PropertyRef Name="Pseudo" />
+          </Key>
+          <Property Name="Pseudo" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="idImage" />
+          </Key>
+          <Property Name="idImage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="imageSource" Type="image" />
+          <Property Name="Image" Type="image" />
+          <Property Name="IdArticle" Type="int" />
+        </EntityType>
+        <EntityType Name="Inscrit">
+          <Key>
+            <PropertyRef Name="Pseudo" />
+          </Key>
+          <Property Name="Pseudo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="50" />
+          <Property Name="Prenom" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateInscription" Type="datetime" />
+          <Property Name="DateDerniereConnexion" Type="datetime" />
+          <Property Name="AdresseMail" Type="nvarchar" MaxLength="50" />
+          <Property Name="MotDePasse" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="idMessage" />
+          </Key>
+          <Property Name="idMessage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="contenu" Type="nvarchar(max)" />
+          <Property Name="DateCreation" Type="datetime" />
+          <Property Name="idArticle" Type="int" Nullable="false" />
+          <Property Name="PseudoVendeur" Type="nvarchar" MaxLength="50" />
+          <Property Name="PseudoEncherisseur" Type="nvarchar" MaxLength="50" />
+          <Property Name="idQuestion" Type="int" />
+        </EntityType>
+        <EntityType Name="Suivre">
+          <Key>
+            <PropertyRef Name="idArticle" />
+            <PropertyRef Name="Pseudo" />
+          </Key>
+          <Property Name="idArticle" Type="int" Nullable="false" />
+          <Property Name="Pseudo" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vendeur">
+          <Key>
+            <PropertyRef Name="Pseudo" />
+          </Key>
+          <Property Name="Pseudo" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Article_Categorie">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="IdCategorie" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="IdCategorie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Article_Vendeur">
+          <End Role="Vendeur" Type="Self.Vendeur" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendeur">
+              <PropertyRef Name="Pseudo" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="PseudoVendeur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Categorie_Categorie">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="0..1" />
+          <End Role="Categorie1" Type="Self.Categorie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="IdCategorie" />
+            </Principal>
+            <Dependent Role="Categorie1">
+              <PropertyRef Name="IdCategorieAppartenance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enchere_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="Enchere" Type="Self.Enchere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="IdArticle" />
+            </Principal>
+            <Dependent Role="Enchere">
+              <PropertyRef Name="IdArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enchere_Encherisseur">
+          <End Role="Encherisseur" Type="Self.Encherisseur" Multiplicity="1" />
+          <End Role="Enchere" Type="Self.Enchere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encherisseur">
+              <PropertyRef Name="Pseudo" />
+            </Principal>
+            <Dependent Role="Enchere">
+              <PropertyRef Name="PseudoEncherisseur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Encherisseur_Inscrit">
+          <End Role="Inscrit" Type="Self.Inscrit" Multiplicity="1" />
+          <End Role="Encherisseur" Type="Self.Encherisseur" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Inscrit">
+              <PropertyRef Name="Pseudo" />
+            </Principal>
+            <Dependent Role="Encherisseur">
+              <PropertyRef Name="Pseudo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Image_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="IdArticle" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="IdArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="IdArticle" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="idArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Encherisseur">
+          <End Role="Encherisseur" Type="Self.Encherisseur" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encherisseur">
+              <PropertyRef Name="Pseudo" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="PseudoEncherisseur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Message">
+          <End Role="Message" Type="Self.Message" Multiplicity="0..1" />
+          <End Role="Message1" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="idMessage" />
+            </Principal>
+            <Dependent Role="Message1">
+              <PropertyRef Name="idQuestion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Vendeur">
+          <End Role="Vendeur" Type="Self.Vendeur" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendeur">
+              <PropertyRef Name="Pseudo" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="PseudoVendeur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Suivre_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="Suivre" Type="Self.Suivre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="IdArticle" />
+            </Principal>
+            <Dependent Role="Suivre">
+              <PropertyRef Name="idArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Suivre_Encherisseur">
+          <End Role="Encherisseur" Type="Self.Encherisseur" Multiplicity="1" />
+          <End Role="Suivre" Type="Self.Suivre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encherisseur">
+              <PropertyRef Name="Pseudo" />
+            </Principal>
+            <Dependent Role="Suivre">
+              <PropertyRef Name="Pseudo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vendeur_Inscrit">
+          <End Role="Inscrit" Type="Self.Inscrit" Multiplicity="1" />
+          <End Role="Vendeur" Type="Self.Vendeur" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Inscrit">
+              <PropertyRef Name="Pseudo" />
+            </Principal>
+            <Dependent Role="Vendeur">
+              <PropertyRef Name="Pseudo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Db2014IbeilleModelStoreContainer">
+          <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categorie" EntityType="Self.Categorie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Enchere" EntityType="Self.Enchere" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Encherisseur" EntityType="Self.Encherisseur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inscrit" EntityType="Self.Inscrit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suivre" EntityType="Self.Suivre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vendeur" EntityType="Self.Vendeur" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Article_Categorie" Association="Self.FK_Article_Categorie">
+            <End Role="Categorie" EntitySet="Categorie" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Article_Vendeur" Association="Self.FK_Article_Vendeur">
+            <End Role="Vendeur" EntitySet="Vendeur" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Categorie_Categorie" Association="Self.FK_Categorie_Categorie">
+            <End Role="Categorie" EntitySet="Categorie" />
+            <End Role="Categorie1" EntitySet="Categorie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enchere_Article" Association="Self.FK_Enchere_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="Enchere" EntitySet="Enchere" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enchere_Encherisseur" Association="Self.FK_Enchere_Encherisseur">
+            <End Role="Encherisseur" EntitySet="Encherisseur" />
+            <End Role="Enchere" EntitySet="Enchere" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Encherisseur_Inscrit" Association="Self.FK_Encherisseur_Inscrit">
+            <End Role="Inscrit" EntitySet="Inscrit" />
+            <End Role="Encherisseur" EntitySet="Encherisseur" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Image_Article" Association="Self.FK_Image_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="Image" EntitySet="Image" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Article" Association="Self.FK_Message_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Encherisseur" Association="Self.FK_Message_Encherisseur">
+            <End Role="Encherisseur" EntitySet="Encherisseur" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Message" Association="Self.FK_Message_Message">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="Message1" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Vendeur" Association="Self.FK_Message_Vendeur">
+            <End Role="Vendeur" EntitySet="Vendeur" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Suivre_Article" Association="Self.FK_Suivre_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="Suivre" EntitySet="Suivre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Suivre_Encherisseur" Association="Self.FK_Suivre_Encherisseur">
+            <End Role="Encherisseur" EntitySet="Encherisseur" />
+            <End Role="Suivre" EntitySet="Suivre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vendeur_Inscrit" Association="Self.FK_Vendeur_Inscrit">
+            <End Role="Inscrit" EntitySet="Inscrit" />
+            <End Role="Vendeur" EntitySet="Vendeur" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Db2014IbeilleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="IdArticle" />
+          </Key>
+          <Property Name="IdArticle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateMiseEnVente" Type="DateTime" Precision="3" />
+          <Property Name="DateVente" Type="DateTime" Precision="3" />
+          <Property Name="PrixMiseEnVente" Type="Double" />
+          <Property Name="IdCategorie" Type="Int32" Nullable="false" />
+          <Property Name="PrixReserve" Type="Double" />
+          <Property Name="PseudoVendeur" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Categorie" Relationship="Self.FK_Article_Categorie" FromRole="Article" ToRole="Categorie" />
+          <NavigationProperty Name="Vendeur" Relationship="Self.FK_Article_Vendeur" FromRole="Article" ToRole="Vendeur" />
+          <NavigationProperty Name="Encheres" Relationship="Self.FK_Enchere_Article" FromRole="Article" ToRole="Enchere" />
+          <NavigationProperty Name="Images" Relationship="Self.FK_Image_Article" FromRole="Article" ToRole="Image" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK_Message_Article" FromRole="Article" ToRole="Message" />
+          <NavigationProperty Name="Encherisseurs" Relationship="Self.Suivre" FromRole="Article" ToRole="Encherisseur" />
+        </EntityType>
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="IdCategorie" />
+          </Key>
+          <Property Name="IdCategorie" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Libelle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdCategorieAppartenance" Type="Int32" />
+          <NavigationProperty Name="Articles" Relationship="Self.FK_Article_Categorie" FromRole="Categorie" ToRole="Article" />
+          <NavigationProperty Name="Categorie1" Relationship="Self.FK_Categorie_Categorie" FromRole="Categorie" ToRole="Categorie1" />
+          <NavigationProperty Name="Categorie2" Relationship="Self.FK_Categorie_Categorie" FromRole="Categorie1" ToRole="Categorie" />
+        </EntityType>
+        <EntityType Name="Enchere">
+          <Key>
+            <PropertyRef Name="idEnchere" />
+          </Key>
+          <Property Name="idEnchere" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Montant" Type="Double" Nullable="false" />
+          <Property Name="DateEnchere" Type="DateTime" Precision="3" />
+          <Property Name="IdArticle" Type="Int32" Nullable="false" />
+          <Property Name="PseudoEncherisseur" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="Self.FK_Enchere_Article" FromRole="Enchere" ToRole="Article" />
+          <NavigationProperty Name="Encherisseur" Relationship="Self.FK_Enchere_Encherisseur" FromRole="Enchere" ToRole="Encherisseur" />
+        </EntityType>
+        <EntityType Name="Encherisseur" BaseType="Db2014IbeilleModel.Inscrit">
+          <NavigationProperty Name="Encheres" Relationship="Self.FK_Enchere_Encherisseur" FromRole="Encherisseur" ToRole="Enchere" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK_Message_Encherisseur" FromRole="Encherisseur" ToRole="Message" />
+          <NavigationProperty Name="Articles" Relationship="Self.Suivre" FromRole="Encherisseur" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="idImage" />
+          </Key>
+          <Property Name="idImage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="imageSource" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Image1" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="IdArticle" Type="Int32" />
+          <NavigationProperty Name="Article" Relationship="Self.FK_Image_Article" FromRole="Image" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="Inscrit">
+          <Key>
+            <PropertyRef Name="Pseudo" />
+          </Key>
+          <Property Name="Pseudo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateInscription" Type="DateTime" Precision="3" />
+          <Property Name="DateDerniereConnexion" Type="DateTime" Precision="3" />
+          <Property Name="AdresseMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MotDePasse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="idMessage" />
+          </Key>
+          <Property Name="idMessage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="contenu" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreation" Type="DateTime" Precision="3" />
+          <Property Name="idArticle" Type="Int32" Nullable="false" />
+          <Property Name="PseudoVendeur" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PseudoEncherisseur" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="idQuestion" Type="Int32" />
+          <NavigationProperty Name="Article" Relationship="Self.FK_Message_Article" FromRole="Message" ToRole="Article" />
+          <NavigationProperty Name="Encherisseur" Relationship="Self.FK_Message_Encherisseur" FromRole="Message" ToRole="Encherisseur" />
+          <NavigationProperty Name="Message1" Relationship="Self.FK_Message_Message" FromRole="Message" ToRole="Message1" />
+          <NavigationProperty Name="Message2" Relationship="Self.FK_Message_Message" FromRole="Message1" ToRole="Message" />
+          <NavigationProperty Name="Vendeur" Relationship="Self.FK_Message_Vendeur" FromRole="Message" ToRole="Vendeur" />
+        </EntityType>
+        <EntityType Name="Vendeur" BaseType="Db2014IbeilleModel.Inscrit">
+          <NavigationProperty Name="Articles" Relationship="Self.FK_Article_Vendeur" FromRole="Vendeur" ToRole="Article" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK_Message_Vendeur" FromRole="Vendeur" ToRole="Message" />
+        </EntityType>
+        <Association Name="FK_Article_Categorie">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="IdCategorie" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="IdCategorie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Article_Vendeur">
+          <End Role="Vendeur" Type="Self.Vendeur" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendeur">
+              <PropertyRef Name="Pseudo" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="PseudoVendeur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enchere_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="Enchere" Type="Self.Enchere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="IdArticle" />
+            </Principal>
+            <Dependent Role="Enchere">
+              <PropertyRef Name="IdArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Image_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="IdArticle" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="IdArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="IdArticle" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="idArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Categorie_Categorie">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="0..1" />
+          <End Role="Categorie1" Type="Self.Categorie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="IdCategorie" />
+            </Principal>
+            <Dependent Role="Categorie1">
+              <PropertyRef Name="IdCategorieAppartenance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enchere_Encherisseur">
+          <End Role="Encherisseur" Type="Self.Encherisseur" Multiplicity="1" />
+          <End Role="Enchere" Type="Self.Enchere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encherisseur">
+              <PropertyRef Name="Pseudo" />
+            </Principal>
+            <Dependent Role="Enchere">
+              <PropertyRef Name="PseudoEncherisseur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Encherisseur">
+          <End Role="Encherisseur" Type="Self.Encherisseur" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encherisseur">
+              <PropertyRef Name="Pseudo" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="PseudoEncherisseur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Message">
+          <End Role="Message" Type="Self.Message" Multiplicity="0..1" />
+          <End Role="Message1" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="idMessage" />
+            </Principal>
+            <Dependent Role="Message1">
+              <PropertyRef Name="idQuestion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Vendeur">
+          <End Role="Vendeur" Type="Self.Vendeur" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendeur">
+              <PropertyRef Name="Pseudo" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="PseudoVendeur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Suivre">
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <End Role="Encherisseur" Type="Self.Encherisseur" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Db2014IbeilleEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Articles" EntityType="Self.Article" />
+          <EntitySet Name="Categories" EntityType="Self.Categorie" />
+          <EntitySet Name="Encheres" EntityType="Self.Enchere" />
+          <EntitySet Name="Images" EntityType="Self.Image" />
+          <EntitySet Name="Inscrits" EntityType="Self.Inscrit" />
+          <EntitySet Name="Messages" EntityType="Self.Message" />
+          <AssociationSet Name="FK_Article_Categorie" Association="Self.FK_Article_Categorie">
+            <End Role="Categorie" EntitySet="Categories" />
+            <End Role="Article" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Article_Vendeur" Association="Self.FK_Article_Vendeur">
+            <End Role="Vendeur" EntitySet="Inscrits" />
+            <End Role="Article" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enchere_Article" Association="Self.FK_Enchere_Article">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="Enchere" EntitySet="Encheres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Image_Article" Association="Self.FK_Image_Article">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="Image" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Article" Association="Self.FK_Message_Article">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Categorie_Categorie" Association="Self.FK_Categorie_Categorie">
+            <End Role="Categorie" EntitySet="Categories" />
+            <End Role="Categorie1" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enchere_Encherisseur" Association="Self.FK_Enchere_Encherisseur">
+            <End Role="Encherisseur" EntitySet="Inscrits" />
+            <End Role="Enchere" EntitySet="Encheres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Encherisseur" Association="Self.FK_Message_Encherisseur">
+            <End Role="Encherisseur" EntitySet="Inscrits" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Message" Association="Self.FK_Message_Message">
+            <End Role="Message" EntitySet="Messages" />
+            <End Role="Message1" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Vendeur" Association="Self.FK_Message_Vendeur">
+            <End Role="Vendeur" EntitySet="Inscrits" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="Suivre" Association="Self.Suivre">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="Encherisseur" EntitySet="Inscrits" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Db2014IbeilleModelStoreContainer" CdmEntityContainer="Db2014IbeilleEntities">
+          <EntitySetMapping Name="Articles">
+            <EntityTypeMapping TypeName="Db2014IbeilleModel.Article">
+              <MappingFragment StoreEntitySet="Article">
+                <ScalarProperty Name="IdArticle" ColumnName="IdArticle" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DateMiseEnVente" ColumnName="DateMiseEnVente" />
+                <ScalarProperty Name="DateVente" ColumnName="DateVente" />
+                <ScalarProperty Name="PrixMiseEnVente" ColumnName="PrixMiseEnVente" />
+                <ScalarProperty Name="IdCategorie" ColumnName="IdCategorie" />
+                <ScalarProperty Name="PrixReserve" ColumnName="PrixReserve" />
+                <ScalarProperty Name="PseudoVendeur" ColumnName="PseudoVendeur" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="Db2014IbeilleModel.Categorie">
+              <MappingFragment StoreEntitySet="Categorie">
+                <ScalarProperty Name="IdCategorie" ColumnName="IdCategorie" />
+                <ScalarProperty Name="Libelle" ColumnName="Libelle" />
+                <ScalarProperty Name="IdCategorieAppartenance" ColumnName="IdCategorieAppartenance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Encheres">
+            <EntityTypeMapping TypeName="Db2014IbeilleModel.Enchere">
+              <MappingFragment StoreEntitySet="Enchere">
+                <ScalarProperty Name="idEnchere" ColumnName="idEnchere" />
+                <ScalarProperty Name="Montant" ColumnName="Montant" />
+                <ScalarProperty Name="DateEnchere" ColumnName="DateEnchere" />
+                <ScalarProperty Name="IdArticle" ColumnName="IdArticle" />
+                <ScalarProperty Name="PseudoEncherisseur" ColumnName="PseudoEncherisseur" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="Db2014IbeilleModel.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="idImage" ColumnName="idImage" />
+                <ScalarProperty Name="imageSource" ColumnName="imageSource" />
+                <ScalarProperty Name="Image1" ColumnName="Image" />
+                <ScalarProperty Name="IdArticle" ColumnName="IdArticle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inscrits">
+            <EntityTypeMapping TypeName="IsTypeOf(Db2014IbeilleModel.Inscrit)">
+              <MappingFragment StoreEntitySet="Inscrit">
+                <ScalarProperty Name="Pseudo" ColumnName="Pseudo" />
+                <ScalarProperty Name="MotDePasse" ColumnName="MotDePasse" />
+                <ScalarProperty Name="AdresseMail" ColumnName="AdresseMail" />
+                <ScalarProperty Name="DateDerniereConnexion" ColumnName="DateDerniereConnexion" />
+                <ScalarProperty Name="DateInscription" ColumnName="DateInscription" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(Db2014IbeilleModel.Encherisseur)">
+              <MappingFragment StoreEntitySet="Encherisseur">
+                <ScalarProperty Name="Pseudo" ColumnName="Pseudo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(Db2014IbeilleModel.Vendeur)">
+              <MappingFragment StoreEntitySet="Vendeur">
+                <ScalarProperty Name="Pseudo" ColumnName="Pseudo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="Db2014IbeilleModel.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="idMessage" ColumnName="idMessage" />
+                <ScalarProperty Name="contenu" ColumnName="contenu" />
+                <ScalarProperty Name="DateCreation" ColumnName="DateCreation" />
+                <ScalarProperty Name="idArticle" ColumnName="idArticle" />
+                <ScalarProperty Name="PseudoVendeur" ColumnName="PseudoVendeur" />
+                <ScalarProperty Name="PseudoEncherisseur" ColumnName="PseudoEncherisseur" />
+                <ScalarProperty Name="idQuestion" ColumnName="idQuestion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Suivre" TypeName="Db2014IbeilleModel.Suivre" StoreEntitySet="Suivre">
+            <EndProperty Name="Encherisseur">
+              <ScalarProperty Name="Pseudo" ColumnName="Pseudo" />
+            </EndProperty>
+            <EndProperty Name="Article">
+              <ScalarProperty Name="IdArticle" ColumnName="idArticle" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
